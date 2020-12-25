@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="75dp">
+        <ImageView
+            android:id="@+id/GameLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/Resume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/GameLogo"
+            android:onClick="resumeGame"
+            android:textColor="@color/ButtonFontColor"
+            android:background="@drawable/button_properties"
+            android:text="Resume" />
+        <Button
+            android:id="@+id/NewGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/Resume"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="newGame"
+            android:textColor="@color/ButtonFontColor"
+            android:background="@drawable/button_properties"
+            android:text="New Game" />
+        <Button
+            android:id="@+id/GameInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/NewGame"
+            android:onClick="gameInfo"
+            android:textColor="@color/ButtonFontColor"
+            android:background="@drawable/button_properties"
+            android:text="Game Info" />
+        <Button
+            android:id="@+id/ExitGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/GameInfo"
+            android:layout_marginTop="10dp"
+            android:onClick="exitGame"
+            android:textColor="@color/ButtonFontColor"
+            android:background="@drawable/button_properties"
+            android:text="Exit Game" />
+    </RelativeLayout>
+</RelativeLayout>
