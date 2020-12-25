@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_properties"
             android:textColor="@color/ButtonFontColor"
+            android:onClick="finishTurn"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/UndoMove"
-            android:onClick="finishTurn"
             android:text="Finish Turn" />
         <Button
             android:id="@+id/ResetGame"
@@ -37,9 +37,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_properties"
             android:textColor="@color/ButtonFontColor"
+            android:onClick="resetGameButton"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/FinishTurn"
-            android:onClick="resetGameButton"
             android:text="Reset Game" />
     </RelativeLayout>
 
@@ -47,27 +47,24 @@
         android:id="@+id/RL2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/RL1"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:layout_centerHorizontal="true">
+        android:layout_below="@+id/RL1">
         <TextView
-            android:id="@+id/Message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/QuitGame"
-            android:text="Game updates will be displayed here."
-            android:textSize="15sp"/>
-        <Button
-            android:id="@+id/QuitGame"
+            android:id="@+id/PlayerTurn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_properties"
-            android:textColor="@color/ButtonFontColor"
-            android:layout_marginLeft="5dp"
+            android:layout_alignParentLeft="true"
+            android:text="Turn of Player: Gold"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/StepsLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:onClick="confirmQuit"
-            android:text="Quit" />
+            android:text="Steps Left: 4"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -75,12 +72,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/RL2"
-        android:layout_marginTop="10dp">
-        <com.rab.arimaa.GameBoard_CustomView
-            android:id="@+id/GameBoardCustomView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/RL2">
+        <TextView
+            android:id="@+id/Message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/QuitGame"
+            android:text="Game updates will be displayed here."
+            android:textSize="16sp"/>
+        <Button
+            android:id="@+id/QuitGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_properties"
+            android:textColor="@color/ButtonFontColor"
+            android:layout_alignParentRight="true"
+            android:onClick="confirmQuit"
+            android:text="Quit" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -88,22 +99,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/RL3">
-        <TextView
-            android:id="@+id/PlayerTurn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="Turn of Player: Gold"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/StepsLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_alignParentRight="true"
-            android:text="Steps Left: 4"
-            android:textSize="18sp"/>
+        <com.rab.arimaa.GameBoard_CustomView
+            android:id="@+id/GameBoardCustomView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 </RelativeLayout>
