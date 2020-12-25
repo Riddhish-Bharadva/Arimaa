@@ -19,10 +19,10 @@ public class GameInfo extends AppCompatActivity {
         ImageView ai = findViewById(R.id.arimaaIcon);
         ImageView e2 = findViewById(R.id.elephant2);
         String agText =
-                "Arimaa was invented in year 2003 by Omar Syed. Omar is a Computer Engineer by profession and an expert in Artificial Intelligence."
-                        + " He wanted to design a new game considering that the Game can be played on a standard chess board, must be difficult to play well by computer and have simple rules that are easily understood even by his 4 years old son Aamir."
+                "Arimaa was invented in year 2003 by Omar Syed."
+                        + " He wanted to design a new game considering that the Game can be played on a standard chess board, must be difficult to play well by computer and have simple rules that are easy to understand."
                         + " Arimaa is an 8x8 board game with four trap squares."
-                        + " There are six different pieces, i.e. rabbit, cat, dog, horse, camel, elephant in ascending order from rabbit being weakest to elephant being strongest piece in the game."
+                        + " There are six different pieces, i.e. rabbit, cat, dog, horse, camel, elephant in ascending order of their weightage. Rabbit is the weakest piece and elephant is a strongest piece on the board."
                         + " This android game is designed to be played in 2 player mode.";
         String grText =
                         "1) All the pieces can move to front, back, left and right except rabbit that cannot move backwards.\n\n"
@@ -41,7 +41,6 @@ public class GameInfo extends AppCompatActivity {
                         + "12) In case weaker piece lands next to stronger piece, weaker piece will become immobile until stronger piece moves away from the same.\n\n"
                         + "13) If weaker piece have a friendly piece next to it, immobility is no longer valid and weaker piece can move without having stronger piece moving away from it.\n\n"
                         + "14) It is possible to win the game by making all the opponent pieces immobile due to which opponent will have nothing to move in his turn.";
-
         String wcText =
                         "1) If your rabbit reaches the other end of the board in forward direction.\n\n"
                         + "2) If you manage to remove all the rabbits of your enemy from the board.\n\n"
