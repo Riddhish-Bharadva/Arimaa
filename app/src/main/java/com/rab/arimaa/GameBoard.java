@@ -140,7 +140,7 @@ public class GameBoard extends AppCompatActivity {
     // Below method will be called when player clicks on FinishTurn button from UI.
     public void finishTurn(View view)
     {
-        if(!gbcv.getWinnerDecided())
+        if(gbcv.getWinnerDecided())
         {
             gbcv.confirmFinishTurn(); // Finishing move to switch player turn.
         }
@@ -240,7 +240,7 @@ public class GameBoard extends AppCompatActivity {
     public void onUndoMoveButtonClicked(View view)
     {
         boolean loop = true;
-        if(!gbcv.getWinnerDecided())
+        if(gbcv.getWinnerDecided())
         {
             while(loop) // I will loop until we achieve our target of undoing all moves done in any turn.
             {

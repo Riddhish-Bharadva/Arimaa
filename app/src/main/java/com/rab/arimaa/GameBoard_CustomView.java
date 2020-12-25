@@ -1041,19 +1041,19 @@ public class GameBoard_CustomView extends View {
     private boolean haveMoves(int i, int j, boolean check)
     {
         boolean isIt = true;
-        if(piece[i][j].compareTo("RABBIT") != 0 && (i+1)<8 && (checkStrongEnemy(i,j,i+1,j) && !checkCanMove(i,j,i+1,j,check))) // Checking in +ve y direction for all possible moves.
+        if(piece[i][j].compareTo("RABBIT") != 0 && (i+1)<8 && (checkStrongEnemy(i,j,i+1,j) && checkCanMove(i, j, i + 1, j, check))) // Checking in +ve y direction for all possible moves.
         {
             isIt = false; // Setting variable to true.
         }
-        if(piece[i][j].compareTo("rabbit") != 0 && (i-1)>=0 && (checkStrongEnemy(i,j,i-1,j) && !checkCanMove(i,j,i-1,j,check))) // Checking in -ve y direction for all possible moves.
+        if(piece[i][j].compareTo("rabbit") != 0 && (i-1)>=0 && (checkStrongEnemy(i,j,i-1,j) && checkCanMove(i, j, i - 1, j, check))) // Checking in -ve y direction for all possible moves.
         {
             isIt = false; // Setting variable to true.
         }
-        if((j+1)<8 && (checkStrongEnemy(i,j,i,j+1) && !checkCanMove(i,j,i,j+1,check))) // Checking in +ve x direction for all possible moves.
+        if((j+1)<8 && (checkStrongEnemy(i,j,i,j+1) && checkCanMove(i, j, i, j + 1, check))) // Checking in +ve x direction for all possible moves.
         {
             isIt = false; // Setting variable to true.
         }
-        if((j-1)>=0 && (checkStrongEnemy(i,j,i,j-1) && !checkCanMove(i,j,i,j-1,check))) // Checking in -ve x direction for all possible moves.
+        if((j-1)>=0 && (checkStrongEnemy(i,j,i,j-1) && checkCanMove(i, j, i, j - 1, check))) // Checking in -ve x direction for all possible moves.
         {
             isIt = false; // Setting variable to true.
         }
@@ -1064,13 +1064,13 @@ public class GameBoard_CustomView extends View {
     // Below method will be called to check if near blocks are null or have weak enemy pieces.
     public boolean checkCanMove(int i, int j, int k, int l, boolean check) {
         if(piece[k][l] == null)
-            return true;
-        if(check && playerTurn.compareTo("Gold") == 0 && piece[k][l] != null && Character.isLowerCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j].toLowerCase())>pieceWeight.get(piece[k][l]) && haveMoves(k,l,false))
-            return true;
-        else if(check && playerTurn.compareTo("Silver") == 0 && piece[k][l] != null && Character.isUpperCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j])>pieceWeight.get(piece[k][l].toLowerCase()) && haveMoves(k,l,false))
-            return true;
-        else
             return false;
+        if(check && playerTurn.compareTo("Gold") == 0 && piece[k][l] != null && Character.isLowerCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j].toLowerCase())>pieceWeight.get(piece[k][l]) && haveMoves(k,l,false))
+            return false;
+        else if(check && playerTurn.compareTo("Silver") == 0 && piece[k][l] != null && Character.isUpperCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j])>pieceWeight.get(piece[k][l].toLowerCase()) && haveMoves(k,l,false))
+            return false;
+        else
+            return true;
     }
     // checkWeakOrNull method ends here.
 
@@ -1096,7 +1096,7 @@ public class GameBoard_CustomView extends View {
 
     // Below method will be used to get winnerDecided variable.
     public boolean getWinnerDecided() {
-        return winnerDecided; // Returning winnerDecided.
+        return !winnerDecided; // Returning winnerDecided.
     }
     // setWinnerDecided method ends here.
 }
