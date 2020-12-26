@@ -55,7 +55,7 @@ public class Actions {
         {
             for(int j=0; j<8; j++) // This will be used to handle columns.
             {
-                if(temp[k].compareTo("") != 0)
+                if(k < temp.length && temp[k] != null && temp[k].compareTo("") != 0)
                     gameState[i][j] = temp[k]; // This will be used to put 8 elements each time in gameState.
                 k++; // Incrementing k.
             }

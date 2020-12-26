@@ -319,12 +319,19 @@ public class GameBoard_CustomView extends View {
             DecimalFormat dE = new DecimalFormat("####.#"); // Formatting touch coordinates to 1 decimal.
             pullStartX = Double.parseDouble(dE.format(pullStartX)); // Applying format.
             pullStartY = Double.parseDouble(dE.format(pullStartY)); // Applying format.
+            Log.i("Message","Into pull.");
+            Log.i("Message","pullStartX: "+pullStartX+" pullStartY: "+pullStartY);
             if(pieceMoveEnd()) // Calling pieceMoveEnd method. This method will handle push and pull event as well.
             {
                 pullTouch = false; // Setting pushTouch to false so that next touch will be for next move.
             }
             invalidate(); // Invalidate the canvas to take piece position changed effect.
             return true; // return true for onTouchEvent.
+        }
+        else
+        {
+            Log.i("Touches","winnerDecided: "+winnerDecided+" touch: "+touch+" pushTouch: "+pushTouch+" pullTouch: "+pullTouch);
+            Log.i("Message","Unidentified touch.");
         }
         return false; // In case none of above if is satisfied, return false.
     }
@@ -521,8 +528,9 @@ public class GameBoard_CustomView extends View {
                 }
             }
         }
-        else if(pullTouch && pullEndX > 0.0 && pullEndY > 0.0) // In case pullTouch is true and we have non 0 values for x and y, do as below.
+        else if(pullTouch && pullStartX > 0.0 && pullStartY > 0.0) // In case pullTouch is true and we have non 0 values for x and y, do as below.
         {
+            Log.i("Message","Into else if pullTouch.");
             pullTouch = false; // Setting pullTouch to false so that next touch will be for new move.
             for(int i=0; i<8; i++) // This loop handles rows.
             {
@@ -535,6 +543,7 @@ public class GameBoard_CustomView extends View {
                             // In case enemy piece position is not null and distance of enemy piece is 1 block next to start position of moved piece, do as below.
                             if(piece[i][j] != null && piece[pullEndY][pullEndX] == null && ((Math.abs(i-pullEndY) == 1 && j == pullEndX) || (Math.abs(j-pullEndX) == 1 && i == pullEndY)))
                             {
+                                Log.i("Message","i: "+i+" j: "+j);
                                 piece[pullEndY][pullEndX] = piece[i][j]; // Change position of enemy piece to new position.
                                 piece[i][j] = null; // Set original position to null.
                                 stepsLeft = stepsLeft - 1; // Decrementing steps left by 2 as push is also considered as 1 step.
@@ -675,6 +684,7 @@ public class GameBoard_CustomView extends View {
 
     // Below method will be called to set pull to true.
     protected void setPull() {
+        Log.i("Setting pull","Setting to true.");
         pullTouch = true; // Setting pullTouch to true so that next step will be identifying piece to be pulled.
         gb.updateMessage("Select enemy piece you want to pull.");
     }

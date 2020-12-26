@@ -62,17 +62,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/RL2">
-        <TextView
-            android:id="@+id/Message"
+        <com.rab.arimaa.GameBoard_CustomView
+            android:id="@+id/GameBoardCustomView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:text="Game updates will be displayed here."
-            android:textSize="16sp"/>
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -81,11 +76,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:layout_below="@+id/RL3">
-        <com.rab.arimaa.GameBoard_CustomView
-            android:id="@+id/GameBoardCustomView"
+        <TextView
+            android:id="@+id/Message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="Game updates will be displayed here."
+            android:textSize="16sp"/>
     </RelativeLayout>
 </RelativeLayout>
