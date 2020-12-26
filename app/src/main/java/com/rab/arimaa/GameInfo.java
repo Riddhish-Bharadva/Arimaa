@@ -58,12 +58,11 @@ public class GameInfo extends AppCompatActivity {
         elephant2 = Bitmap.createScaledBitmap(elephant2,150,150,false);
         e2.setImageBitmap(elephant2);
     }
-// Below method will be called when user press back button on device.
+
+    // Below method will be called when user press back button on device.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finish(); // Finish existing activity.
-        Intent start = new Intent(this, MainActivity.class); // Create new activity.
-        startActivity(start); // Start new activity.
     }
 }

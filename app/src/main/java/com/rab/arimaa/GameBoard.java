@@ -54,7 +54,7 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // Below method will be called when user clicks on Quit button.
-    public void quitGame()
+    protected void quitGame()
     {
         if(a.recordPresent()) // In case there are few moves played by player, do as below.
         {
@@ -84,7 +84,7 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // Below method will be called when user clicks on reset game button.
-    public void resetGame()
+    protected void resetGame()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
         builder.setTitle("Are you sure you want to reset this game?"); // Setting dialog message.
@@ -134,28 +134,26 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // This method will be called when user presses back button and confirms to go back.
-    public void goBack()
+    protected void goBack()
     {
         this.finish(); // Finish existing activity.
-        Intent start = new Intent(GameBoard.this, MainActivity.class); // Create new activity.
-        startActivity(start); // Start new activity.
     }
 
     // Below method will be called to update message on UI.
-    public void updateMessage(String Message)
+    protected void updateMessage(String Message)
     {
         messageTV.setText(Message);
     }
 
     // Below method will be called to update Steps Left on UI.
-    public void updateStepsLeft(int sl)
+    protected void updateStepsLeft(int sl)
     {
         String update = "Steps Left: "+sl;
         stepsLeftTV.setText(update);
     }
 
     // Below method will be called to update player turn on UI.
-    public void updatePlayerTurn(String pt)
+    protected void updatePlayerTurn(String pt)
     {
         String update = "Turn of Player: "+pt;
         playerTurnTV.setText(update);
@@ -185,7 +183,7 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // Finish game and declare result.
-    public void finishGame(String winner)
+    protected void finishGame(String winner)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
         builder.setTitle("Player: "+winner+" have won this game."); // Setting dialog message.
@@ -201,7 +199,7 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // Below method will be called when player wishes to push enemy piece.
-    public void pushPosition()
+    protected void pushPosition()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
         builder.setTitle("Please select position to push the enemy piece."); // Setting dialog message.
@@ -218,7 +216,7 @@ public class GameBoard extends AppCompatActivity {
     // pushPosition method ends here.
 
     // Below method will be called when player wish to pull enemy piece.
-    public void isPull()
+    protected void isPull()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
         builder.setTitle("Do you wish to pull your enemy piece?"); // Setting dialog message.
@@ -243,7 +241,7 @@ public class GameBoard extends AppCompatActivity {
     // isPull method ends here.
 
     // Below method will be called when player wishes to pull enemy piece.
-    public void pullPosition()
+    protected void pullPosition()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
         builder.setTitle("Please select enemy piece you want to pull."); // Setting dialog message.
@@ -293,7 +291,7 @@ public class GameBoard extends AppCompatActivity {
     // onRevertMoveButtonClicked method ends here.
 
     // Below method will be called to function for revert move.
-    public void undoMove(String reason)
+    protected void undoMove(String reason)
     {
         if(a.recordPresent() && a.deleteLastRecord()) // In case there are records in db table and if we are able to delete last record, do as below.
         {

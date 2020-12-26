@@ -20,7 +20,7 @@ public class Actions {
     // Declaration ends here.
 
     // Below function is used to check if there are any records in DB or not.
-    public boolean recordPresent()
+    protected boolean recordPresent()
     {
         Cursor dbValues = myDB.rawQuery("Select * From " + tableName, null); // Query to fetch all data in db table.
         boolean decision = false; // Declaring and initializing decision variable to false.
@@ -34,7 +34,7 @@ public class Actions {
     // recordPresent method ends here.
 
     // Below function is used to truncateDBTable.
-    public void truncateDBTable()
+    protected void truncateDBTable()
     {
         String TruncateQuery = "DELETE FROM gamestate;"; // This is string to truncate db table.
         myDB.execSQL(TruncateQuery); // Execute truncate statement.
@@ -42,7 +42,7 @@ public class Actions {
     // truncateDBTable method ends here.
 
     // Below function will be used to convert last record in db to 2D string array.
-    public String[][] getStringArray()
+    protected String[][] getStringArray()
     {
         String state;
         String[][] gameState = new String[8][8];
@@ -66,7 +66,7 @@ public class Actions {
     // getStringArray method ends here.
 
     // Below method will be used to identify player turn when game resumes.
-    public String getPlayerTurn()
+    protected String getPlayerTurn()
     {
         String playerTurn;
         Cursor dbValue = myDB.rawQuery("Select * From " + tableName + " DESC", null); // Query to fetch last record in db table.
@@ -78,7 +78,7 @@ public class Actions {
     // getPlayerTurn method ends here.
 
     // Below method will be used to identify steps left when game resumes.
-    public int getStepsLeft()
+    protected int getStepsLeft()
     {
         int stepsLeft;
         Cursor dbValue = myDB.rawQuery("Select * From " + tableName + " DESC", null); // Query to fetch last record in db table.
@@ -90,7 +90,7 @@ public class Actions {
     // getStepsLeft method ends here.
 
     // Below function will be used to convert 2D String array to String and store it in db.
-    public String convertToString(String[][] gameState)
+    protected String convertToString(String[][] gameState)
     {
         StringBuilder sb = new StringBuilder(); // Initializing string builder.
         for(int i=0; i<8; i++) // This loop handles rows.
@@ -116,7 +116,7 @@ public class Actions {
     // convertToString method ends here.
 
     // Below method will be called to store data into db table.
-    public boolean storeData(String playerTurn, int stepsLeft, String[][] gameState)
+    protected boolean storeData(String playerTurn, int stepsLeft, String[][] gameState)
     {
         String state; // Initializing variable.
         state = convertToString(gameState);
@@ -138,7 +138,7 @@ public class Actions {
     }
 
     // Below method will be used to delete 1 row from DB table.
-    public boolean deleteLastRecord()
+    protected boolean deleteLastRecord()
     {
         String dateTime;
         int status;

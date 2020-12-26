@@ -110,7 +110,7 @@ public class GameBoard_CustomView extends View {
     // Init Method Ends.
 
     // Below method will reset the board pieces. This function will be used to when a new game is started or reset button is pressed.
-    public void resetGame(String gameStatus, String reason) {
+    protected void resetGame(String gameStatus, String reason) {
         selectPossible = new String[8][8]; // Initializing 2D string array to keep board selected and possible moves piece blank.
         piece = new String[8][8]; // Initializing 2D-String array to keep all reset related functions here.
         playerTurn = "Gold"; // Initializing player turn to Gold.
@@ -580,7 +580,7 @@ public class GameBoard_CustomView extends View {
     // pieceMoveEnd method ends here.
 
     // Below method will return number of steps left in current turn.
-    public int getStepsLeft()
+    protected int getStepsLeft()
     {
         return stepsLeft; // Return stepsLeft.
     }
@@ -672,7 +672,7 @@ public class GameBoard_CustomView extends View {
     // highlightPossibleMoves method ends here.
 
     // Below method will be called to set pull to true.
-    public void setPull() {
+    protected void setPull() {
         pullTouch = true; // Setting pullTouch to true so that next step will be identifying piece to be pulled.
         gb.updateMessage("Select enemy piece you want to pull.");
     }
@@ -697,7 +697,7 @@ public class GameBoard_CustomView extends View {
     // isWeakOrNull method ends here.
 
     // Below method will be called to check if there are any stronger piece near currently selected piece.
-    public boolean nearStrongerPiece() {
+    private boolean nearStrongerPiece() {
         boolean decision = false;
         int i = pieceStartY;
         int j = pieceStartX;
@@ -744,7 +744,7 @@ public class GameBoard_CustomView extends View {
     // nearStrongerPiece method ends here.
 
     // Below method will be called to check if there are any stronger piece near currently selected piece.
-    public boolean nearFriendlyPiece() {
+    private boolean nearFriendlyPiece() {
         boolean decision = false;
         int i = pieceStartY;
         int j = pieceStartX;
@@ -791,7 +791,7 @@ public class GameBoard_CustomView extends View {
     // nearFriendlyPiece method ends here.
 
     // Below method will be called to check if there are any weaker enemy piece near currently selected piece.
-    public boolean nearWeakerEnemy() {
+    private boolean nearWeakerEnemy() {
         boolean decision = false;
         int i = pieceStartY;
         int j = pieceStartX;
@@ -846,7 +846,7 @@ public class GameBoard_CustomView extends View {
     // nearWeakerEnemy method ends here.
 
     // Below method will be called when player clicks on Finish Move button from UI.
-    public void confirmFinishTurn() {
+    protected void confirmFinishTurn() {
         if(stepsLeft < 4) // If at least 1 step is moved by player, do as below.
         {
             stepsLeft = 4; // Reset stepsLeft.
@@ -1062,7 +1062,7 @@ public class GameBoard_CustomView extends View {
     // haveMoves method ends here.
 
     // Below method will be called to check if near blocks are null or have weak enemy pieces.
-    public boolean checkCanMove(int i, int j, int k, int l, boolean check) {
+    private boolean checkCanMove(int i, int j, int k, int l, boolean check) {
         if(piece[k][l] == null)
             return true;
         if(check && playerTurn.compareTo("Gold") == 0 && piece[k][l] != null && Character.isLowerCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j].toLowerCase())>pieceWeight.get(piece[k][l]) && haveMoves(k,l,false))
@@ -1075,7 +1075,7 @@ public class GameBoard_CustomView extends View {
     // checkWeakOrNull method ends here.
 
     // Below method will be called to check if near blocks are null or have weak enemy pieces.
-    public boolean checkStrongEnemy(int i, int j, int k, int l) {
+    private boolean checkStrongEnemy(int i, int j, int k, int l) {
         if(playerTurn.compareTo("Gold") == 0 && piece[k][l] != null && Character.isLowerCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j].toLowerCase())<pieceWeight.get(piece[k][l]))
             return true;
         else if(playerTurn.compareTo("Silver") == 0 && piece[k][l] != null && Character.isUpperCase(piece[k][l].charAt(0)) && pieceWeight.get(piece[i][j])<pieceWeight.get(piece[k][l].toLowerCase()))
@@ -1086,7 +1086,7 @@ public class GameBoard_CustomView extends View {
     // checkWeakOrNull method ends here.
 
     // Below method will be used to set winnerDecided variable.
-    public void setWinnerDecided() {
+    protected void setWinnerDecided() {
         winner = ""; // Resetting winner.
         winnerDecided = false; // Resetting winnerDecided.
         goldRabbit = 8; // Resetting gold rabbit count.
@@ -1095,7 +1095,7 @@ public class GameBoard_CustomView extends View {
     // setWinnerDecided method ends here.
 
     // Below method will be used to get winnerDecided variable.
-    public boolean getWinnerDecided() {
+    protected boolean getWinnerDecided() {
         return !winnerDecided; // Returning winnerDecided.
     }
     // setWinnerDecided method ends here.

@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity
     // Below method is used to redirect user to Game page with mode resume game.
     public void resumeGame(View view)
     {
-        this.finish(); // Finish existing activity.
         Intent RG = new Intent(MainActivity.this, GameBoard.class); // Redirect.
         startActivity(RG); // Start redirecting.
     }
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity
         {
             a.truncateDBTable(); // Call function to truncate DB table.
         }
-        this.finish(); // Finish existing activity.
         Intent NG = new Intent(MainActivity.this, GameBoard.class); // Redirect.
         NG.putExtra("Message","StartNewGame");
         startActivity(NG); // Start redirecting.
@@ -67,7 +65,6 @@ public class MainActivity extends AppCompatActivity
     // Below method is used to redirect user to GameInfo page.
     public void gameInfo(View view)
     {
-        this.finish(); // Finish existing activity.
         Intent GI = new Intent(MainActivity.this, GameInfo.class); // Redirect.
         startActivity(GI); // Start redirecting.
     }
