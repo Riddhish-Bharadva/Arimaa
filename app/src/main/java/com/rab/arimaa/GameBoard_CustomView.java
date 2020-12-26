@@ -179,6 +179,7 @@ public class GameBoard_CustomView extends View {
             }
             gb.updatePlayerTurn("Gold"); // Updating player turn.
             gb.updateMessage("New game has been started."); // Update message on UI.
+            saveGameData(); // Saving state of Game board.
         }
         else if(gameStatus.compareTo("ResumeGame") == 0) // In case gameState is ResumeGame, do as below.
         {
@@ -475,6 +476,7 @@ public class GameBoard_CustomView extends View {
                     {
                         if (pushEndX >= boxSize * j && pushEndX < boxSize * (j + 1)) // If match for x axis is found, do as below.
                         {
+                            a.deleteLastRecord(); // Deleting last record in db table to make this move along with last one transactional.
                             if(piece[i][j] == null && selectPossible[i][j] != null && selectPossible[i][j].compareTo("possible") == 0) // Since we have already calculated possible moves, we will check if second touch is one of them or not.
                             {
                                 piece[i][j] = piece[pushStartY][pushStartX]; // Moving enemy piece to new position.

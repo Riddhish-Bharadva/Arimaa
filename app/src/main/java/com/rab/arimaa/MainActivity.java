@@ -1,14 +1,12 @@
 package com.rab.arimaa;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.database.sqlite.*;
 import android.content.*;
-import android.widget.ImageView;
+import android.graphics.*;
+import android.widget.*;
 
 public class MainActivity extends AppCompatActivity
 {
