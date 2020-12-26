@@ -11,7 +11,7 @@ import androidx.annotation.*;
 
 public class GameBoard_CustomView extends View {
     // Declaring required variables. All the below variables are static as we do not want any other instance of any variables when an object is created.
-    private static int screenSize = 0, boxSize = 0, imageSize = 0, pieceStartX = 0, pieceStartY = 0, goldRabbit = 8, silverRabbit = 8, pushStartX = 0, pushStartY = 0, pullEndX = 0, pullEndY = 0, enemyWeakPieceAdjacentCount = 0;
+    private static int screenSize = 0, boxSize = 0, imageSize = 0, pieceStartX = 0, pieceStartY = 0, pieceEndX = 0, pieceEndY = 0, goldRabbit = 8, silverRabbit = 8, pushStartX = 0, pushStartY = 0, pullEndX = 0, pullEndY = 0, enemyWeakPieceAdjacentCount = 0;
     private static Paint light, dark, border, selectedPiece, possibleMoves; // These are colors of boxes on board.
     private static Rect square; // This is to make blocks on screen square.
     private static boolean winnerDecided = false; // This will decide if game can be continued or not.
@@ -179,7 +179,6 @@ public class GameBoard_CustomView extends View {
             }
             gb.updatePlayerTurn("Gold"); // Updating player turn.
             gb.updateMessage("New game has been started."); // Update message on UI.
-            saveGameData(); // Saving state of Game board.
         }
         else if(gameStatus.compareTo("ResumeGame") == 0) // In case gameState is ResumeGame, do as below.
         {
@@ -319,19 +318,12 @@ public class GameBoard_CustomView extends View {
             DecimalFormat dE = new DecimalFormat("####.#"); // Formatting touch coordinates to 1 decimal.
             pullStartX = Double.parseDouble(dE.format(pullStartX)); // Applying format.
             pullStartY = Double.parseDouble(dE.format(pullStartY)); // Applying format.
-            Log.i("Message","Into pull.");
-            Log.i("Message","pullStartX: "+pullStartX+" pullStartY: "+pullStartY);
             if(pieceMoveEnd()) // Calling pieceMoveEnd method. This method will handle push and pull event as well.
             {
                 pullTouch = false; // Setting pushTouch to false so that next touch will be for next move.
             }
             invalidate(); // Invalidate the canvas to take piece position changed effect.
             return true; // return true for onTouchEvent.
-        }
-        else
-        {
-            Log.i("Touches","winnerDecided: "+winnerDecided+" touch: "+touch+" pushTouch: "+pushTouch+" pullTouch: "+pullTouch);
-            Log.i("Message","Unidentified touch.");
         }
         return false; // In case none of above if is satisfied, return false.
     }
@@ -411,6 +403,8 @@ public class GameBoard_CustomView extends View {
                                         gb.isPull(); // This will trigger dialog for user to select an option of pull.
                                         pullEndY = pieceStartY; // End Y of enemy piece to be pulled will be start Y of piece to be moved.
                                         pullEndX = pieceStartX; // End X of enemy piece to be pulled will be start X of piece to be moved.
+                                        pieceEndY = i; // This is end Y of current piece going to pull enemy.
+                                        pieceEndX = j; // This is end X of current piece going to pull enemy.
                                     }
                                     piece[i][j] = piece[pieceStartY][pieceStartX]; // Change position.
                                     piece[pieceStartY][pieceStartX] = null; // Set previous position to null.
@@ -530,7 +524,6 @@ public class GameBoard_CustomView extends View {
         }
         else if(pullTouch && pullStartX > 0.0 && pullStartY > 0.0) // In case pullTouch is true and we have non 0 values for x and y, do as below.
         {
-            Log.i("Message","Into else if pullTouch.");
             pullTouch = false; // Setting pullTouch to false so that next touch will be for new move.
             for(int i=0; i<8; i++) // This loop handles rows.
             {
@@ -543,7 +536,6 @@ public class GameBoard_CustomView extends View {
                             // In case enemy piece position is not null and distance of enemy piece is 1 block next to start position of moved piece, do as below.
                             if(piece[i][j] != null && piece[pullEndY][pullEndX] == null && ((Math.abs(i-pullEndY) == 1 && j == pullEndX) || (Math.abs(j-pullEndX) == 1 && i == pullEndY)))
                             {
-                                Log.i("Message","i: "+i+" j: "+j);
                                 piece[pullEndY][pullEndX] = piece[i][j]; // Change position of enemy piece to new position.
                                 piece[i][j] = null; // Set original position to null.
                                 stepsLeft = stepsLeft - 1; // Decrementing steps left by 2 as push is also considered as 1 step.
@@ -573,6 +565,7 @@ public class GameBoard_CustomView extends View {
                                     gb.updatePlayerTurn(playerTurn); // Update player turn on UI.
                                 }
                                 a.deleteLastRecord(); // Deleting last record in db table to make this move along with last one transactional.
+                                selectPossible = new String[8][8]; // Reset 2D array.
                                 checkTrapBlocks(); // Check trap blocks for any elimination.
                                 return true;
                             }
@@ -645,11 +638,11 @@ public class GameBoard_CustomView extends View {
             i = pieceStartY; // Assign value of y.
             j = pieceStartX; // Assign value of x.
             checkOtherConditions = true; // Set this to true as we need to check all possible combinations.
-            if(piece[i][j].compareTo("RABBIT") != 0 && (i+1)<8 && isWeakOrNull(i+1,j, true)) // Checking in +ve y direction for all possible moves.
+            if(piece[i][j].compareTo("RABBIT") != 0 && (i+1)<8 && isWeakOrNull(i+1,j, true,false)) // Checking in +ve y direction for all possible moves.
             {
                 selectPossible[i+1][j] = "possible"; // If true, set selectPossible array to "possible".
             }
-            if(piece[i][j].compareTo("rabbit") != 0 && (i-1)>=0 && isWeakOrNull(i-1,j, true)) // Checking in -ve y direction for all possible moves.
+            if(piece[i][j].compareTo("rabbit") != 0 && (i-1)>=0 && isWeakOrNull(i-1,j, true,false)) // Checking in -ve y direction for all possible moves.
             {
                 selectPossible[i-1][j] = "possible"; // If true, set selectPossible array to "possible".
             }
@@ -662,20 +655,20 @@ public class GameBoard_CustomView extends View {
             i = pushStartY; // Assign value of y.
             j = pushStartX; // Assign value of x.
             checkOtherConditions = false; // Set this to false as we need to check only for null positions.
-            if((i+1)<8 && isWeakOrNull(i+1,j, false)) // Checking in +ve y direction for all possible moves.
+            if((i+1)<8 && isWeakOrNull(i+1,j, false,false)) // Checking in +ve y direction for all possible moves.
             {
                 selectPossible[i+1][j] = "possible"; // If true, set selectPossible array to "possible".
             }
-            if((i-1)>=0 && isWeakOrNull(i-1,j, false)) // Checking in -ve y direction for all possible moves.
+            if((i-1)>=0 && isWeakOrNull(i-1,j, false,false)) // Checking in -ve y direction for all possible moves.
             {
                 selectPossible[i-1][j] = "possible"; // If true, set selectPossible array to "possible".
             }
         }
-        if((j+1)<8 && isWeakOrNull(i,j+1, checkOtherConditions)) // Checking in +ve x direction for all possible moves.
+        if((j+1)<8 && isWeakOrNull(i,j+1, checkOtherConditions,false)) // Checking in +ve x direction for all possible moves.
         {
             selectPossible[i][j+1] = "possible"; // If true, set selectPossible array to "possible".
         }
-        if((j-1)>=0 && isWeakOrNull(i,j-1, checkOtherConditions)) // Checking in -ve x direction for all possible moves.
+        if((j-1)>=0 && isWeakOrNull(i,j-1, checkOtherConditions,false)) // Checking in -ve x direction for all possible moves.
         {
             selectPossible[i][j-1] = "possible"; // If true, set selectPossible array to "possible".
         }
@@ -684,25 +677,68 @@ public class GameBoard_CustomView extends View {
 
     // Below method will be called to set pull to true.
     protected void setPull() {
-        Log.i("Setting pull","Setting to true.");
         pullTouch = true; // Setting pullTouch to true so that next step will be identifying piece to be pulled.
         gb.updateMessage("Select enemy piece you want to pull.");
+        highlightPossiblePull(); // Calling function to highlight possible pulls.
+        this.postInvalidate(); // Invalidating canvas.
     }
     // setPull method ends here.
 
+    // Below function will be called to identify all possible enemy pieces that can be pulled.
+    private void highlightPossiblePull()
+    {
+        int i = 0, j = 0;
+        if(pullTouch) // In case touch is true, i.e. if touch is first touch of move, do as below.
+        {
+            i = pieceStartY; // Assign value of y.
+            j = pieceStartX; // Assign value of x.
+            if((i+1)<8 && isWeakOrNull(i+1,j, false,true)) // Checking in +ve y direction for all possible moves.
+            {
+                selectPossible[i+1][j] = "possible"; // If true, set selectPossible array to "possible".
+            }
+            if((i-1)>=0 && isWeakOrNull(i-1,j, false,true)) // Checking in -ve y direction for all possible moves.
+            {
+                selectPossible[i-1][j] = "possible"; // If true, set selectPossible array to "possible".
+            }
+            if((j+1)<8 && isWeakOrNull(i,j+1, false,true)) // Checking in +ve x direction for all possible moves.
+            {
+                selectPossible[i][j+1] = "possible"; // If true, set selectPossible array to "possible".
+            }
+            if((j-1)>=0 && isWeakOrNull(i,j-1, false,true)) // Checking in -ve x direction for all possible moves.
+            {
+                selectPossible[i][j-1] = "possible"; // If true, set selectPossible array to "possible".
+            }
+        }
+    }
+    // highlightPossiblePull method ends here.
+
     // Below method will be called to check if passed piece is weak than selected piece.
-    private boolean isWeakOrNull(int i, int j, boolean checkOthers) {
-        if(piece[i][j] == null) // In case of any touch including push or pull, this condition will always be checked.
+    private boolean isWeakOrNull(int i, int j, boolean checkOthers, boolean isPull) {
+        if(!isPull)
         {
-            return true; // Return true if above satisfies.
+            if(piece[i][j] == null) // In case of any touch including push or pull, this condition will always be checked.
+            {
+                return true; // Return true if above satisfies.
+            }
+            else if(checkOthers && playerTurn.compareTo("Gold")==0 && Character.isLowerCase(piece[i][j].charAt(0))) // In case of push or pull, this will not be checked.
+            {
+                return pieceWeight.get(piece[i][j]) < pieceWeight.get(piece[pieceStartY][pieceStartX].toLowerCase()); // This will be return true or false based on values in HM.
+            }
+            else if(checkOthers && playerTurn.compareTo("Silver")==0 && Character.isUpperCase(piece[i][j].charAt(0))) // In case of push or pull, this will not be checked.
+            {
+                return pieceWeight.get(piece[i][j].toLowerCase()) < pieceWeight.get(piece[pieceStartY][pieceStartX]); // This will be return true or false based on values in HM.
+            }
         }
-        else if(checkOthers && playerTurn.compareTo("Gold")==0 && Character.isLowerCase(piece[i][j].charAt(0))) // In case of push or pull, this will not be checked.
+        else
         {
-            return pieceWeight.get(piece[i][j]) < pieceWeight.get(piece[pieceStartY][pieceStartX].toLowerCase()); // This will be return true or false based on values in HM.
-        }
-        else if(checkOthers && playerTurn.compareTo("Silver")==0 && Character.isUpperCase(piece[i][j].charAt(0))) // In case of push or pull, this will not be checked.
-        {
-            return pieceWeight.get(piece[i][j].toLowerCase()) < pieceWeight.get(piece[pieceStartY][pieceStartX]); // This will be return true or false based on values in HM.
+            if(piece[i][j] != null && playerTurn.compareTo("Gold")==0 && Character.isLowerCase(piece[i][j].charAt(0))) // In case of push or pull, this will not be checked.
+            {
+                return pieceWeight.get(piece[i][j]) < pieceWeight.get(piece[pieceEndY][pieceEndX].toLowerCase()); // This will be return true or false based on values in HM.
+            }
+            else if(piece[i][j] != null && playerTurn.compareTo("Silver")==0 && Character.isUpperCase(piece[i][j].charAt(0))) // In case of push or pull, this will not be checked.
+            {
+                return pieceWeight.get(piece[i][j].toLowerCase()) < pieceWeight.get(piece[pieceEndY][pieceEndX]); // This will be return true or false based on values in HM.
+            }
         }
         return false; // In case none from above satisfies, return false.
     }
@@ -980,14 +1016,14 @@ public class GameBoard_CustomView extends View {
             if(piece[0][i] != null && piece[0][i].compareTo("RABBIT") == 0) // In case rabbit of player gold reaches other end of board, do as below.
             {
                 winner = "Gold"; // Declare winner.
-                winnerMessage = "Rabbit of "+winner+" has reached the other end and hence, "+winner+" has won this game."; // Setting winnerMessage to be displayed on UI later.
+                winnerMessage = "Rabbit of "+winner+" has reached the extreme other end of the board and hence, "+winner+" has won this game."; // Setting winnerMessage to be displayed on UI later.
                 winnerDecided = true; // Set variable to true.
                 break; // Break this loop.
             }
             else if(piece[7][i] != null && piece[7][i].compareTo("rabbit") == 0) // In case rabbit of player silver reaches other end of board, do as below.
             {
                 winner = "Silver"; // Declare winner.
-                winnerMessage = "Rabbit of "+winner+" has reached the other end and hence, "+winner+" has won this game."; // Setting winnerMessage to be displayed on UI later.
+                winnerMessage = "Rabbit of "+winner+" has reached the extreme other end of the board and hence, "+winner+" has won this game."; // Setting winnerMessage to be displayed on UI later.
                 winnerDecided = true; // Set variable to true.
                 break; // Break this loop.
             }

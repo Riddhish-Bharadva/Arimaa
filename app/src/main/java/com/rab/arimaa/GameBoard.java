@@ -53,13 +53,67 @@ public class GameBoard extends AppCompatActivity {
         }
     }
 
+    // Below method will be called when user press back button on device.
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this); // Creating AlertDialog builder.
+        builder.setTitle("Go back"); // Setting dialog header.
+        builder.setMessage("Are you sure you want to go back to main menu? You can still resume this game later."); // Setting dialog message.
+        // Below is to handle positive response from user.
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                GameBoard.super.onBackPressed();
+                goBack(); // Go back to main activity.
+            }
+        });
+        // Below is to handle negative response from user.
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel(); // Cancel this dialog.
+            }
+        });
+        AlertDialog dialog = builder.create(); // Creating dialog.
+        dialog.show(); // Show dialog.
+    }
+
+    // This method will be called when user presses back button and confirms to go back.
+    protected void goBack()
+    {
+        this.finish(); // Finish existing activity.
+        Intent goBack = new Intent(GameBoard.this, MainActivity.class); // Create new activity.
+        startActivity(goBack); // Start new activity.
+    }
+
+    // Below method will be called to update message on UI.
+    protected void updateMessage(String Message)
+    {
+        messageTV.setText(Message);
+    }
+
+    // Below method will be called to update Steps Left on UI.
+    protected void updateStepsLeft(int sl)
+    {
+        String update = "Steps Left: "+sl;
+        stepsLeftTV.setText(update);
+    }
+
+    // Below method will be called to update player turn on UI.
+    protected void updatePlayerTurn(String pt)
+    {
+        String update = "Turn of Player: "+pt;
+        playerTurnTV.setText(update);
+    }
+
     // Below method will be called when user clicks on Quit button.
     protected void quitGame()
     {
         if(a.recordPresent()) // In case there are few moves played by player, do as below.
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-            builder.setTitle("Are you sure you want to quit this game?"); // Setting dialog message.
+            builder.setTitle("Quit Game"); // Setting dialog header.
+            builder.setMessage("Are you sure you want to quit this game? You can still resume this game later."); // Setting dialog message.
             // Below is to handle positive response from user.
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
@@ -87,7 +141,8 @@ public class GameBoard extends AppCompatActivity {
     protected void resetGame()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-        builder.setTitle("Are you sure you want to reset this game?"); // Setting dialog message.
+        builder.setTitle("Reset Game"); // Setting dialog header.
+        builder.setMessage("Are you sure you want to reset this game?"); // Setting dialog message.
         // Below is to handle positive response from user.
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -109,84 +164,12 @@ public class GameBoard extends AppCompatActivity {
         dialog.show(); // Show dialog.
     }
 
-    // Below method will be called when user press back button on device.
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this); // Creating AlertDialog builder.
-        builder.setTitle("Are you sure you want to go back to main menu?"); // Setting dialog message.
-        // Below is to handle positive response from user.
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                GameBoard.super.onBackPressed();
-                goBack(); // Go back to main activity.
-            }
-        });
-        // Below is to handle negative response from user.
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel(); // Cancel this dialog.
-            }
-        });
-        AlertDialog dialog = builder.create(); // Creating dialog.
-        dialog.show(); // Show dialog.
-    }
-
-    // This method will be called when user presses back button and confirms to go back.
-    protected void goBack()
-    {
-        this.finish(); // Finish existing activity.
-    }
-
-    // Below method will be called to update message on UI.
-    protected void updateMessage(String Message)
-    {
-        messageTV.setText(Message);
-    }
-
-    // Below method will be called to update Steps Left on UI.
-    protected void updateStepsLeft(int sl)
-    {
-        String update = "Steps Left: "+sl;
-        stepsLeftTV.setText(update);
-    }
-
-    // Below method will be called to update player turn on UI.
-    protected void updatePlayerTurn(String pt)
-    {
-        String update = "Turn of Player: "+pt;
-        playerTurnTV.setText(update);
-    }
-
-    // Below method will be called when player clicks on FinishTurn button from UI.
-    public void finishTurn(View view)
-    {
-        if(gbcv.getWinnerDecided())
-        {
-            gbcv.confirmFinishTurn(); // Finishing move to switch player turn.
-        }
-        else
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-            builder.setTitle("Game has already ended."); // Setting dialog message.
-            // Below is to handle response from user.
-            builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel(); // Simply cancelling dialog box.
-                }
-            });
-            AlertDialog dialog = builder.create(); // Creating dialog.
-            dialog.show(); // Show dialog.
-        }
-    }
-
     // Finish game and declare result.
     protected void finishGame(String winner)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-        builder.setTitle("Player: "+winner+" have won this game."); // Setting dialog message.
+        builder.setTitle("Congratulations!"); // Setting dialog message.
+        builder.setMessage("Player "+winner+" is the winner of this game.");
         // Below is to handle response from user.
         builder.setPositiveButton("Back to Game", new DialogInterface.OnClickListener() {
             @Override
@@ -202,7 +185,8 @@ public class GameBoard extends AppCompatActivity {
     protected void pushPosition()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-        builder.setTitle("Please select position to push the enemy piece."); // Setting dialog message.
+        builder.setTitle("Push enemy piece"); // Setting dialog header.
+        builder.setMessage("Please select position from highlighted blocks to push your enemy piece."); // Setting dialog message.
         // Below is to handle response from user.
         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
@@ -219,7 +203,8 @@ public class GameBoard extends AppCompatActivity {
     protected void isPull()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-        builder.setTitle("Do you wish to pull your enemy piece?"); // Setting dialog message.
+        builder.setTitle("Pull enemy piece"); // Setting dialog header.
+        builder.setMessage("Do you wish to pull your enemy piece?"); // Setting dialog message.
         // Below is to handle positive response from user.
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -244,7 +229,8 @@ public class GameBoard extends AppCompatActivity {
     protected void pullPosition()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-        builder.setTitle("Please select enemy piece you want to pull."); // Setting dialog message.
+        builder.setTitle("Pull enemy piece"); // Setting dialog header.
+        builder.setMessage("Please select enemy piece from highlighted blocks to pull."); // Setting dialog message.
         // Below is to handle response from user.
         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
@@ -276,7 +262,8 @@ public class GameBoard extends AppCompatActivity {
         else
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
-            builder.setTitle("Game has already ended."); // Setting dialog message.
+            builder.setTitle("Undo Move"); // Setting dialog header.
+            builder.setMessage("Oops! Game has already ended."); // Setting dialog message.
             // Below is to handle response from user.
             builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                 @Override
@@ -308,4 +295,28 @@ public class GameBoard extends AppCompatActivity {
         }
     }
     // undoMove method ends here.
+
+    // Below method will be called when player clicks on FinishTurn button from UI.
+    public void finishTurn(View view)
+    {
+        if(gbcv.getWinnerDecided())
+        {
+            gbcv.confirmFinishTurn(); // Finishing move to switch player turn.
+        }
+        else
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
+            builder.setTitle("Finish Turn"); // Setting dialog header.
+            builder.setMessage("Oops! Game has already ended."); // Setting dialog message.
+            // Below is to handle response from user.
+            builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel(); // Simply cancelling dialog box.
+                }
+            });
+            AlertDialog dialog = builder.create(); // Creating dialog.
+            dialog.show(); // Show dialog.
+        }
+    }
 }

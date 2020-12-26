@@ -1,6 +1,7 @@
 package com.rab.arimaa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.graphics.*;
 import android.widget.*;
@@ -62,5 +63,7 @@ public class GameInfo extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish(); // Finish existing activity.
+        Intent goBack = new Intent(GameInfo.this, MainActivity.class); // Create new activity.
+        startActivity(goBack); // Start new activity.
     }
 }
