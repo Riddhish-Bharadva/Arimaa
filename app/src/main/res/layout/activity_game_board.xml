@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
         android:layout_margin="10dp">
         <Button
             android:id="@+id/UndoMove"
@@ -31,16 +30,6 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/UndoMove"
             android:text="Finish Turn" />
-        <Button
-            android:id="@+id/ResetGame"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_properties"
-            android:textColor="@color/ButtonFontColor"
-            android:onClick="resetGameButton"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/FinishTurn"
-            android:text="Reset Game" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -78,20 +67,11 @@
         <TextView
             android:id="@+id/Message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/QuitGame"
+            android:gravity="center_vertical"
             android:text="Game updates will be displayed here."
             android:textSize="16sp"/>
-        <Button
-            android:id="@+id/QuitGame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_properties"
-            android:textColor="@color/ButtonFontColor"
-            android:layout_alignParentRight="true"
-            android:onClick="confirmQuit"
-            android:text="Quit" />
     </RelativeLayout>
 
     <RelativeLayout

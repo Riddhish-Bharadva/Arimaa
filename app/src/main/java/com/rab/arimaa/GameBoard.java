@@ -30,11 +30,11 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // Below method will be called when user clicks on Quit button.
-    public void confirmQuit(View view)
+    public void quitGame()
     {
         if(a.recordPresent()) // In case there are few moves played by player, do as below.
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this); // Creating AlertDialog builder.
+            AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
             builder.setTitle("Are you sure you want to quit this game?"); // Setting dialog message.
             // Below is to handle positive response from user.
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -60,9 +60,9 @@ public class GameBoard extends AppCompatActivity {
     }
 
     // Below method will be called when user clicks on reset game button.
-    public void resetGameButton(View view)
+    public void resetGame()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this); // Creating AlertDialog builder.
+        AlertDialog.Builder builder = new AlertDialog.Builder(context); // Creating AlertDialog builder.
         builder.setTitle("Are you sure you want to reset this game?"); // Setting dialog message.
         // Below is to handle positive response from user.
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
