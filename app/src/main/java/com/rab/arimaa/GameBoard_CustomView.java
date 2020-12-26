@@ -531,7 +531,7 @@ public class GameBoard_CustomView extends View {
                         if(pullStartX >= boxSize * j && pullStartX < boxSize * (j + 1)) // If match for x axis is found, do as below.
                         {
                             // In case enemy piece position is not null and distance of enemy piece is 1 block next to start position of moved piece, do as below.
-                            if(piece[i][j] != null && piece[pullEndY][pullEndX] == null && (Math.abs(i-pullEndY) == 1 || Math.abs(j-pullEndX) == 1))
+                            if(piece[i][j] != null && piece[pullEndY][pullEndX] == null && ((Math.abs(i-pullEndY) == 1 && j == pullEndX) || (Math.abs(j-pullEndX) == 1 && i == pullEndY)))
                             {
                                 piece[pullEndY][pullEndX] = piece[i][j]; // Change position of enemy piece to new position.
                                 piece[i][j] = null; // Set original position to null.

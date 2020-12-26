@@ -1,6 +1,7 @@
 package com.rab.arimaa;
 
 import android.os.Bundle;
+import androidx.annotation.*;
 import androidx.appcompat.app.*;
 import android.content.*;
 import android.view.*;
@@ -26,6 +27,29 @@ public class GameBoard extends AppCompatActivity {
         if(getIntent().getStringExtra("Message") != null && getIntent().getStringExtra("Message").compareTo("StartNewGame") == 0) // Checking if new game is requested.
         {
             gbcv.setWinnerDecided(); // Resetting all winner data.
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) // This method will be used to inflate menu options.
+    {
+        getMenuInflater().inflate(R.menu.gameboard_menu,menu); // Rendering menu from gameboard_menu.xml file.
+        return true; // Return true if above is successful.
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) // This method will be used to identify item selected from menu.
+    {
+        switch(item.getItemId())
+        {
+            case R.id.QuitGameOption: // In case Quit Game option is selected from menu, do as below.
+                quitGame(); // Call function to quit game.
+                return true; // Return true.
+            case R.id.ResetGameOption: // In case Reset Game option is selected from menu, do as below.
+                resetGame(); // Call function to reset game.
+                return true; // Return true.
+            default: // In case any other option is selected by injection, do as below.
+                return false; // Return false.
         }
     }
 
