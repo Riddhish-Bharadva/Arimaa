@@ -240,7 +240,7 @@ public class GameBoard_CustomView extends View {
                     }
                 }
                 bitmap = identifyPiece(i-1,j-1); // Passing i-1 and j-1 as i & j are both starting from 1 but 2D array starts from 0.
-                if(bitmap != null) // Incase bitmap is not null, draw image as below.
+                if(bitmap != null) // In case bitmap is not null, draw image as below.
                 {
                     bitmap = Bitmap.createScaledBitmap(bitmap,imageSize,imageSize,false); // Rescaling image.
                     canvas.drawBitmap(bitmap,(float)boxSize/10,(float)boxSize/10,null); // drawing image on canvas.
@@ -403,9 +403,9 @@ public class GameBoard_CustomView extends View {
                                         gb.isPull(); // This will trigger dialog for user to select an option of pull.
                                         pullEndY = pieceStartY; // End Y of enemy piece to be pulled will be start Y of piece to be moved.
                                         pullEndX = pieceStartX; // End X of enemy piece to be pulled will be start X of piece to be moved.
-                                        pieceEndY = i; // This is end Y of current piece going to pull enemy.
-                                        pieceEndX = j; // This is end X of current piece going to pull enemy.
                                     }
+                                    pieceEndY = i; // This is end Y of current piece going to pull enemy.
+                                    pieceEndX = j; // This is end X of current piece going to pull enemy.
                                     piece[i][j] = piece[pieceStartY][pieceStartX]; // Change position.
                                     piece[pieceStartY][pieceStartX] = null; // Set previous position to null.
                                     stepsLeft = stepsLeft - 1; // Updating global variable for remaining steps.
@@ -678,7 +678,7 @@ public class GameBoard_CustomView extends View {
     // Below method will be called to set pull to true.
     protected void setPull() {
         pullTouch = true; // Setting pullTouch to true so that next step will be identifying piece to be pulled.
-        gb.updateMessage("Select enemy piece you want to pull.");
+        gb.updateMessage("Select from highlighted enemy piece you want to pull.");
         highlightPossiblePull(); // Calling function to highlight possible pulls.
         this.postInvalidate(); // Invalidating canvas.
     }
@@ -687,7 +687,7 @@ public class GameBoard_CustomView extends View {
     // Below function will be called to identify all possible enemy pieces that can be pulled.
     private void highlightPossiblePull()
     {
-        int i = 0, j = 0;
+        int i, j;
         if(pullTouch) // In case touch is true, i.e. if touch is first touch of move, do as below.
         {
             i = pieceStartY; // Assign value of y.
