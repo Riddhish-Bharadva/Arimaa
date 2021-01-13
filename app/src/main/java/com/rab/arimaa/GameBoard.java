@@ -302,6 +302,7 @@ public class GameBoard extends AppCompatActivity {
         if(gbcv.getWinnerDecided())
         {
             gbcv.confirmFinishTurn(); // Finishing move to switch player turn.
+            gbcv.postInvalidate(); // Refreshing the canvas.
         }
         else
         {
