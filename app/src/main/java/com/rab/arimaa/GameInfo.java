@@ -19,8 +19,8 @@ public class GameInfo extends AppCompatActivity {
         ImageView ai = findViewById(R.id.arimaaIcon);
         ImageView e2 = findViewById(R.id.elephant2);
         String agText =
-                "Arimaa was invented in the year 2003 by Omar Syed."
-                        + " He wanted to design a new game considering that the Game can be played on a standard chess board, must be difficult to play well by computer and have simple rules that are easy to understand."
+                "Arimaa was invented in the year 2003."
+                        + " Game developer wanted to design a new game considering that the Game can be played on a standard chess board, must be difficult to play well by computer and have simple rules that are easy to understand."
                         + " Arimaa is an 8x8 board game with four trap squares."
                         + " There are six different pieces on Arimaa Game Board, i.e. rabbit, cat, dog, horse, camel, elephant in ascending order of their weight."
                         + " Rabbit is the weakest piece and elephant is a strongest piece on the board."
